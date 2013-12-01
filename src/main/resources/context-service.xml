@@ -7,6 +7,8 @@
 	http://www.springframework.org/schema/util
 	http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 
+	<util:properties id="weiboProperties" location="classpath:weibo.properties" />
+
 	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
 		<property name="requestFactory">
 			<bean class="com.weibo.http.client.TrustClientHttpRequestFactory"></bean>
@@ -25,7 +27,5 @@
 			</array>
 		</property>
 	</bean>
-
-	<util:properties id="weiboProperties" location="classpath:weibo.properties" />
 
 </beans>
