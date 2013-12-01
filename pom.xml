@@ -57,6 +57,7 @@
 				<filtering>true</filtering>
 				<directory>src/main/resources/</directory>
 				<includes>
+					<include>*.groovy</include>
 					<include>*.xml</include>
 					<include>**/*.xml</include>
 					<include>*.properties</include>
