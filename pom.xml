@@ -4,7 +4,7 @@
 	<groupId>com.weibo</groupId>
 	<artifactId>weibo-api</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1-BETA</version>
 	<name>weibo-api</name>
 	<url>http://weibo.com/</url>
 	<properties>
@@ -47,7 +47,7 @@
 		<filters>
 			<filter>src/main/filters/weibo-${deploy.phase}.properties</filter>
 		</filters>
-		<finalName>${project.artifactId}</finalName>
+		<finalName>${project.artifactId}-${deploy.phase}</finalName>
 		<resources>
 			<resource>
 				<filtering>true</filtering>
