@@ -15,6 +15,7 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -37,8 +38,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class OAuth2 {
 
+	@Value("#{weiboProperties.appKey}")
 	private String appKey;
+
+	@Value("#{weiboProperties.appSecret}")
 	private String appSecret;
+
+	@Value("#{weiboProperties.redirectUri}")
 	private String redirectUri;
 
 	private static final String OAUTH2_AUTHORIZE = "https://api.weibo.com/oauth2/authorize";

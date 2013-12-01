@@ -44,9 +44,6 @@
 		</profile>
 	</profiles>
 	<build>
-		<filters>
-			<filter>src/main/filters/weibo-${deploy.phase}.properties</filter>
-		</filters>
 		<finalName>${project.artifactId}</finalName>
 		<resources>
 			<resource>
