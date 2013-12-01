@@ -14,36 +14,39 @@
 	</properties>
 	<profiles>
 		<profile>
-			<id>dev</id>
+			<id>outdoor</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 				<property>
 					<name>env</name>
-					<value>dev</value>
+					<value>outdoor</value>
 				</property>
 			</activation>
 			<properties>
-				<deploy.phase>dev</deploy.phase>
+				<deploy.phase>outdoor</deploy.phase>
 				<maven.test.skip>true</maven.test.skip>
 				<jdk.version>1.6</jdk.version>
 			</properties>
 		</profile>
 		<profile>
-			<id>release</id>
+			<id>gotour</id>
 			<activation>
 				<property>
 					<name>env</name>
-					<value>release</value>
+					<value>gotour</value>
 				</property>
 			</activation>
 			<properties>
-				<deploy.phase>release</deploy.phase>
+				<deploy.phase>gotour</deploy.phase>
 				<maven.test.skip>true</maven.test.skip>
 				<jdk.version>1.6</jdk.version>
 			</properties>
 		</profile>
 	</profiles>
 	<build>
+		<filters>
+			<filter>src/main/filters/weibo-${deploy.phase}.properties</filter>
+		</filters>
 		<finalName>${project.artifactId}</finalName>
 		<resources>
 			<resource>

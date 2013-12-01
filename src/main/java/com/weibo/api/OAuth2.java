@@ -15,10 +15,10 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -36,20 +36,16 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2013年11月23日
  */
 @Slf4j
+@Component
 public class OAuth2 {
-
-	@Value("#{weiboProperties.appKey}")
-	private String appKey;
-
-	@Value("#{weiboProperties.appSecret}")
-	private String appSecret;
-
-	@Value("#{weiboProperties.redirectUri}")
-	private String redirectUri;
 
 	private static final String OAUTH2_AUTHORIZE = "https://api.weibo.com/oauth2/authorize";
 	private static final String OAUTH2_ACCESS_TOKEN = "https://api.weibo.com/oauth2/access_token";
 	private static final String OAUTH2_GET_TOKEN_INFO = "https://api.weibo.com/oauth2/get_token_info";
+
+	private String appKey;
+	private String appSecret;
+	private String redirectUri;
 
 	@Resource
 	private RestTemplate restTemplate;
