@@ -28,10 +28,4 @@
 
 	<util:properties id="weiboProperties" location="classpath:weibo.properties" />
 
-	<bean id="oAuth2" class="com.weibo.api.OAuth2">
-		<property name="appKey" value="${weibo.appkey}"></property>
-		<property name="appSecret" value="${weibo.appsecret}"></property>
-		<property name="redirectUri" value="${weibo.redirecturi}"></property>
-	</bean>
-
 </beans>
