@@ -64,7 +64,7 @@ public class Statuses {
 				map.add("list_id", listId);
 			}
 		}
-		map.add("accessToken", accessToken);
+		map.add("access_token", accessToken);
 		log.info(map.toString());
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);

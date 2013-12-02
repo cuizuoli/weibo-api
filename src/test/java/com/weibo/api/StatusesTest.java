@@ -31,7 +31,7 @@ public class StatusesTest extends AbstractTest {
 
 	@Test
 	public void update() {
-		statuses.update("Weibo-api Test 111", dataMap.get("accessToken"));
+		statuses.update("Weibo-api Test 21311", dataMap.get("accessToken"));
 	}
 
 }
