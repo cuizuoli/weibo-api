@@ -18,6 +18,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @date 2013年11月23日
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"classpath:context-service.xml"})
+@ContextConfiguration({"classpath:context-weibo.xml", "classpath:context-data.xml"})
 public abstract class AbstractTest {
 }

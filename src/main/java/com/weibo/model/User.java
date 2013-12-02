@@ -7,7 +7,6 @@
 
 package com.weibo.model;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import lombok.Data;
@@ -58,8 +57,7 @@ public class User {
 	@JsonProperty("verified_type")
 	private int verifiedType;
 	private String remark;
-	@JsonIgnore
-	private Object status;
+	private Status status;
 	private int ptype;
 	@JsonProperty("allow_all_comment")
 	private boolean allowAllComment;
