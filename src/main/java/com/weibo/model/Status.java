@@ -7,6 +7,7 @@
 
 package com.weibo.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import lombok.Data;
@@ -43,6 +44,8 @@ public class Status {
 	@JsonProperty("original_pic")
 	private String originalPic;
 	private String geo;
+	@JsonIgnore
+	private String user;
 	@JsonProperty("reposts_count")
 	private int repostsCount;
 	@JsonProperty("comments_count")
