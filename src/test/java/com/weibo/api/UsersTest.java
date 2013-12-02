@@ -39,4 +39,14 @@ public class UsersTest extends AbstractTest {
 		users.showByName(dataMap.get("name"), dataMap.get("accessToken"));
 	}
 
+	@Test
+	public void domainShow() {
+		users.domainShow(dataMap.get("domain"), dataMap.get("accessToken"));
+	}
+
+	@Test
+	public void counts() {
+		users.counts(dataMap.get("uids"), dataMap.get("accessToken"));
+	}
+
 }

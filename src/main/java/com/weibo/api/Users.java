@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.weibo.model.User;
+import com.weibo.model.UserCount;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +28,8 @@ import lombok.extern.slf4j.Slf4j;
 public class Users {
 
 	private static final String USERS_SHOW_URL = "https://api.weibo.com/2/users/show.json";
+	private static final String USERS_DOMAIN_SHOW_URL = "https://api.weibo.com/2/users/domain_show.json";
+	private static final String USERS_COUNTS_URL = "https://api.weibo.com/2/users/counts.json";
 
 	@Resource
 	private RestTemplate restTemplate;
@@ -63,6 +66,42 @@ public class Users {
 		User user = restTemplate.getForObject(url, User.class);
 		log.info(user.toString());
 		return user;
+	}
+
+	/**
+	 * http://open.weibo.com/wiki/2/users/domain_show
+	 * @param domain
+	 * @param accessToken
+	 * @return
+	 */
+	public User domainShow(String domain, String accessToken) {
+		String url = new StringBuffer()
+			.append(USERS_DOMAIN_SHOW_URL)
+			.append("?domain=").append(domain)
+			.append("&access_token=").append(accessToken)
+			.toString();
+		User user = restTemplate.getForObject(url, User.class);
+		log.info(user.toString());
+		return user;
+	}
+
+	/**
+	 * http://open.weibo.com/wiki/2/users/counts
+	 * @param uids
+	 * @param accessToken
+	 * @return
+	 */
+	public UserCount[] counts(String uids, String accessToken) {
+		String url = new StringBuffer()
+			.append(USERS_COUNTS_URL)
+			.append("?uids=").append(uids)
+			.append("&access_token=").append(accessToken)
+			.toString();
+		UserCount[] userCounts = restTemplate.getForObject(url, UserCount[].class);
+		for (UserCount userCount : userCounts) {
+			log.info(userCount.toString());
+		}
+		return userCounts;
 	}
 
 }
