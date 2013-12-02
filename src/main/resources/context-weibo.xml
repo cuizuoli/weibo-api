@@ -35,13 +35,7 @@
 	</bean>
 
 	<context:component-scan base-package="com.weibo.api">
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
 	</context:component-scan>
-
-	<bean id="oAuth2" class="com.weibo.api.OAuth2">
-		<property name="appKey" value="${weibo.appKey}"></property>
-		<property name="appSecret" value="${weibo.appSecret}"></property>
-		<property name="redirectUri" value="${weibo.redirectUri}"></property>
-	</bean>
 
 </beans>

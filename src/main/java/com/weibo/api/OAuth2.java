@@ -15,6 +15,7 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -43,8 +44,13 @@ public class OAuth2 {
 	private static final String OAUTH2_ACCESS_TOKEN = "https://api.weibo.com/oauth2/access_token";
 	private static final String OAUTH2_GET_TOKEN_INFO = "https://api.weibo.com/oauth2/get_token_info";
 
+	@Value("#{weiboProperties['weibo.appKey']}")
 	private String appKey;
+
+	@Value("#{weiboProperties['weibo.appSecret']}")
 	private String appSecret;
+
+	@Value("#{weiboProperties['weibo.redirectUri']}")
 	private String redirectUri;
 
 	@Resource
@@ -128,22 +134,6 @@ public class OAuth2 {
 			log.error(ExceptionUtils.getFullStackTrace(e));
 		}
 		return null;
-	}
-
-	public void setAppKey(String appKey) {
-		this.appKey = appKey;
-	}
-
-	public void setAppSecret(String appSecret) {
-		this.appSecret = appSecret;
-	}
-
-	public void setRedirectUri(String redirectUri) {
-		this.redirectUri = redirectUri;
-	}
-
-	public void setRestTemplate(RestTemplate restTemplate) {
-		this.restTemplate = restTemplate;
 	}
 
 }
