@@ -33,6 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 public class Statuses {
 
 	private static final String STATUSES_UPDATE_URL = "https://api.weibo.com/2/statuses/update.json";
+	private static final String STATUSES_DESTROY_URL = "https://api.weibo.com/2/statuses/destroy.json";
 
 	@Resource
 	private RestTemplate restTemplate;
@@ -70,6 +71,25 @@ public class Statuses {
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 		HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<MultiValueMap<String, Object>>(map, headers);
 		Status result = restTemplate.postForObject(STATUSES_UPDATE_URL, request, Status.class);
+		log.info(result.toString());
+		return result;
+	}
+
+	/**
+	 * http://open.weibo.com/wiki/2/statuses/destroy
+	 * @param id
+	 * @param accessToken
+	 * @return
+	 */
+	public Status destroy(String id, String accessToken) {
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+		map.add("id", id);
+		map.add("access_token", accessToken);
+		log.info(map.toString());
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+		Status result = restTemplate.postForObject(STATUSES_DESTROY_URL, request, Status.class);
 		log.info(result.toString());
 		return result;
 	}
