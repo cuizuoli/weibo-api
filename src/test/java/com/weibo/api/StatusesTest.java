@@ -30,8 +30,13 @@ public class StatusesTest extends AbstractTest {
 	private Statuses statuses;
 
 	@Test
+	public void repost() {
+		statuses.repost("105", "Weibo-api Report Test", null, null, dataMap.get("accessToken"));
+	}
+
+	@Test
 	public void update() {
-		statuses.update("Weibo-api Test 21311", dataMap.get("accessToken"));
+		statuses.update("Weibo-api Update Test", dataMap.get("accessToken"));
 	}
 
 	@Test

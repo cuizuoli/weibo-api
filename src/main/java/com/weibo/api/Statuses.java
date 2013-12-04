@@ -9,12 +9,14 @@ package com.weibo.api;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import com.weibo.enums.Visible;
 import com.weibo.http.client.WeiboHttpClient;
+import com.weibo.model.RepostStatus;
 import com.weibo.model.Status;
 
 /**
@@ -26,11 +28,38 @@ import com.weibo.model.Status;
 @Component
 public class Statuses {
 
+	private static final String STATUSES_REPORT_URL = "https://api.weibo.com/2/statuses/repost.json";
 	private static final String STATUSES_UPDATE_URL = "https://api.weibo.com/2/statuses/update.json";
 	private static final String STATUSES_DESTROY_URL = "https://api.weibo.com/2/statuses/destroy.json";
 
 	@Resource
 	private WeiboHttpClient weiboHttpClient;
+
+	/**
+	 * repost
+	 * @param id
+	 * @param status
+	 * @param isComment
+	 * @param rip
+	 * @param accessToken
+	 * @return
+	 */
+	public RepostStatus repost(String id, String status, String isComment, String rip, String accessToken) {
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		map.add("id", id);
+		if (StringUtils.isNotBlank(status)) {
+			map.add("status", status);
+		}
+		if (StringUtils.isBlank(isComment)) {
+			isComment = "0";
+		}
+		map.add("isComment", isComment);
+		if (StringUtils.isNotBlank(rip)) {
+			map.add("rip", rip);
+		}
+		map.add("access_token", accessToken);
+		return weiboHttpClient.postForm(STATUSES_REPORT_URL, map, RepostStatus.class);
+	}
 
 	/**
 	 * http://open.weibo.com/wiki/2/statuses/update
