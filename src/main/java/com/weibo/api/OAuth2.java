@@ -16,15 +16,12 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 
 import com.weibo.enums.Display;
+import com.weibo.http.client.WeiboHttpClient;
 import com.weibo.model.AccessToken;
 import com.weibo.model.TokenInfo;
 
@@ -54,7 +51,7 @@ public class OAuth2 {
 	private String redirectUri;
 
 	@Resource
-	private RestTemplate restTemplate;
+	private WeiboHttpClient weiboHttpClient;
 
 	/**
 	 * http://open.weibo.com/wiki/Oauth2/authorize
@@ -88,11 +85,7 @@ public class OAuth2 {
 		map.add("grant_type", "authorization_code");
 		map.add("code", code);
 		map.add("redirect_uri", redirectUri);
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
-		String result = restTemplate.postForObject(OAUTH2_ACCESS_TOKEN, request, String.class);
-		log.info(result);
+		String result = weiboHttpClient.post(OAUTH2_ACCESS_TOKEN, map, String.class);
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			AccessToken accessToken = objectMapper.readValue(result, AccessToken.class);
@@ -116,11 +109,7 @@ public class OAuth2 {
 	public TokenInfo getTokenInfo(String accessToken) {
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
 		map.add("access_token", accessToken);
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
-		String result = restTemplate.postForObject(OAUTH2_GET_TOKEN_INFO, request, String.class);
-		log.info(result);
+		String result = weiboHttpClient.post(OAUTH2_GET_TOKEN_INFO, map, String.class);
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			TokenInfo tokenInfo = objectMapper.readValue(result, TokenInfo.class);

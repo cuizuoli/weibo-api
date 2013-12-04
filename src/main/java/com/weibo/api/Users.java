@@ -10,12 +10,10 @@ package com.weibo.api;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
+import com.weibo.http.client.WeiboHttpClient;
 import com.weibo.model.User;
 import com.weibo.model.UserCount;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * DaLian Software weibo-api
@@ -23,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
  * @author cuizuoli
  * @date 2013年11月23日
  */
-@Slf4j
 @Component
 public class Users {
 
@@ -32,7 +29,7 @@ public class Users {
 	private static final String USERS_COUNTS_URL = "https://api.weibo.com/2/users/counts.json";
 
 	@Resource
-	private RestTemplate restTemplate;
+	private WeiboHttpClient weiboHttpClient;
 
 	/**
 	 * http://open.weibo.com/wiki/2/users/show
@@ -46,9 +43,7 @@ public class Users {
 			.append("?uid=").append(uid)
 			.append("&access_token=").append(accessToken)
 			.toString();
-		User user = restTemplate.getForObject(url, User.class);
-		log.info(user.toString());
-		return user;
+		return weiboHttpClient.get(url, User.class);
 	}
 
 	/**
@@ -63,9 +58,7 @@ public class Users {
 			.append("?screen_name=").append(screenName)
 			.append("&access_token=").append(accessToken)
 			.toString();
-		User user = restTemplate.getForObject(url, User.class);
-		log.info(user.toString());
-		return user;
+		return weiboHttpClient.get(url, User.class);
 	}
 
 	/**
@@ -80,9 +73,7 @@ public class Users {
 			.append("?domain=").append(domain)
 			.append("&access_token=").append(accessToken)
 			.toString();
-		User user = restTemplate.getForObject(url, User.class);
-		log.info(user.toString());
-		return user;
+		return weiboHttpClient.get(url, User.class);
 	}
 
 	/**
@@ -97,11 +88,7 @@ public class Users {
 			.append("?uids=").append(uids)
 			.append("&access_token=").append(accessToken)
 			.toString();
-		UserCount[] userCounts = restTemplate.getForObject(url, UserCount[].class);
-		for (UserCount userCount : userCounts) {
-			log.info(userCount.toString());
-		}
-		return userCounts;
+		return weiboHttpClient.get(url, UserCount[].class);
 	}
 
 }
