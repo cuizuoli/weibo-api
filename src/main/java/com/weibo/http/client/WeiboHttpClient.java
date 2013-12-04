@@ -8,7 +8,6 @@
 package com.weibo.http.client;
 
 import java.lang.reflect.Field;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -106,7 +105,7 @@ public class WeiboHttpClient {
 	 * @return
 	 */
 	public <T> T get(String url, Class<T> responseType) {
-		return get(url, null, responseType, null);
+		return get(url, null, responseType);
 	}
 
 	/**
@@ -117,18 +116,14 @@ public class WeiboHttpClient {
 	 * @param urlVariables
 	 * @return
 	 */
-	public <T> T get(String url, Object request, Class<T> responseType, Map<String, ?> urlVariables) {
+	public <T> T get(String url, Object request, Class<T> responseType) {
 		T result = null;
 		try {
 			if (request != null) {
 				url += getBody(request);
 			}
 			log.info("api - get: " + url);
-			if (urlVariables != null && urlVariables.size() != 0) {
-				result = restTemplate.getForObject(url, responseType, urlVariables);
-			} else {
-				result = restTemplate.getForObject(url, responseType);
-			}
+			result = restTemplate.getForObject(url, responseType);
 			log.info("result : " + result.toString());
 		} catch (HttpStatusCodeException e) {
 			ErrorCode errorCode = errorCodeHandler.handle(e);
