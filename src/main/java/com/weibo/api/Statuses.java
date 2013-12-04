@@ -60,7 +60,7 @@ public class Statuses {
 			}
 		}
 		map.add("access_token", accessToken);
-		return weiboHttpClient.post(STATUSES_UPDATE_URL, map, Status.class);
+		return weiboHttpClient.postForm(STATUSES_UPDATE_URL, map, Status.class);
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class Statuses {
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
 		map.add("id", id);
 		map.add("access_token", accessToken);
-		return weiboHttpClient.post(STATUSES_DESTROY_URL, map, Status.class);
+		return weiboHttpClient.postForm(STATUSES_DESTROY_URL, map, Status.class);
 	}
 
 }

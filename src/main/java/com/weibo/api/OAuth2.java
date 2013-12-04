@@ -85,7 +85,7 @@ public class OAuth2 {
 		map.add("grant_type", "authorization_code");
 		map.add("code", code);
 		map.add("redirect_uri", redirectUri);
-		String result = weiboHttpClient.post(OAUTH2_ACCESS_TOKEN, map, String.class);
+		String result = weiboHttpClient.postForm(OAUTH2_ACCESS_TOKEN, map, String.class);
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			AccessToken accessToken = objectMapper.readValue(result, AccessToken.class);
@@ -109,7 +109,7 @@ public class OAuth2 {
 	public TokenInfo getTokenInfo(String accessToken) {
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
 		map.add("access_token", accessToken);
-		String result = weiboHttpClient.post(OAUTH2_GET_TOKEN_INFO, map, String.class);
+		String result = weiboHttpClient.postForm(OAUTH2_GET_TOKEN_INFO, map, String.class);
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			TokenInfo tokenInfo = objectMapper.readValue(result, TokenInfo.class);
