@@ -41,7 +41,7 @@ public class StatusesTest extends AbstractTest {
 
 	@Test
 	public void destroy() {
-		statuses.destroy("1", dataMap.get("accessToken"));
+		statuses.destroy("3652072421540206", dataMap.get("accessToken"));
 	}
 
 }

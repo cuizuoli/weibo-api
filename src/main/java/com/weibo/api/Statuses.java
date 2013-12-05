@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import com.weibo.enums.IsComment;
 import com.weibo.enums.Visible;
 import com.weibo.http.client.WeiboHttpClient;
 import com.weibo.model.Status;
@@ -28,8 +29,8 @@ import com.weibo.model.Status;
 public class Statuses {
 
 	private static final String STATUSES_REPORT_URL = "https://api.weibo.com/2/statuses/repost.json";
-	private static final String STATUSES_UPDATE_URL = "https://api.weibo.com/2/statuses/update.json";
 	private static final String STATUSES_DESTROY_URL = "https://api.weibo.com/2/statuses/destroy.json";
+	private static final String STATUSES_UPDATE_URL = "https://api.weibo.com/2/statuses/update.json";
 
 	@Resource
 	private WeiboHttpClient weiboHttpClient;
@@ -43,21 +44,34 @@ public class Statuses {
 	 * @param accessToken
 	 * @return
 	 */
-	public Status repost(String id, String status, String isComment, String rip, String accessToken) {
+	public Status repost(String id, String status, IsComment isComment, String rip, String accessToken) {
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		map.add("id", id);
 		if (StringUtils.isNotBlank(status)) {
 			map.add("status", status);
 		}
-		if (StringUtils.isBlank(isComment)) {
-			isComment = "0";
+		if (isComment == null) {
+			isComment = IsComment.NO;
 		}
-		map.add("isComment", isComment);
+		map.add("isComment", isComment.getCode());
 		if (StringUtils.isNotBlank(rip)) {
 			map.add("rip", rip);
 		}
 		map.add("access_token", accessToken);
 		return weiboHttpClient.postForm(STATUSES_REPORT_URL, map, Status.class);
+	}
+
+	/**
+	 * http://open.weibo.com/wiki/2/statuses/destroy
+	 * @param id
+	 * @param accessToken
+	 * @return
+	 */
+	public Status destroy(String id, String accessToken) {
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+		map.add("id", id);
+		map.add("access_token", accessToken);
+		return weiboHttpClient.postForm(STATUSES_DESTROY_URL, map, Status.class);
 	}
 
 	/**
@@ -89,19 +103,6 @@ public class Statuses {
 		}
 		map.add("access_token", accessToken);
 		return weiboHttpClient.postForm(STATUSES_UPDATE_URL, map, Status.class);
-	}
-
-	/**
-	 * http://open.weibo.com/wiki/2/statuses/destroy
-	 * @param id
-	 * @param accessToken
-	 * @return
-	 */
-	public Status destroy(String id, String accessToken) {
-		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
-		map.add("id", id);
-		map.add("access_token", accessToken);
-		return weiboHttpClient.postForm(STATUSES_DESTROY_URL, map, Status.class);
 	}
 
 }
