@@ -16,7 +16,6 @@ import org.springframework.util.MultiValueMap;
 
 import com.weibo.enums.Visible;
 import com.weibo.http.client.WeiboHttpClient;
-import com.weibo.model.RepostStatus;
 import com.weibo.model.Status;
 
 /**
@@ -44,7 +43,7 @@ public class Statuses {
 	 * @param accessToken
 	 * @return
 	 */
-	public RepostStatus repost(String id, String status, String isComment, String rip, String accessToken) {
+	public Status repost(String id, String status, String isComment, String rip, String accessToken) {
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		map.add("id", id);
 		if (StringUtils.isNotBlank(status)) {
@@ -58,7 +57,7 @@ public class Statuses {
 			map.add("rip", rip);
 		}
 		map.add("access_token", accessToken);
-		return weiboHttpClient.postForm(STATUSES_REPORT_URL, map, RepostStatus.class);
+		return weiboHttpClient.postForm(STATUSES_REPORT_URL, map, Status.class);
 	}
 
 	/**

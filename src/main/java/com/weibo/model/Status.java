@@ -52,4 +52,7 @@ public class Status {
 	private int attitudesCount;
 	private int mlevel;
 	private Visible visible;
+	private Object annotations;
+	@JsonProperty("retweeted_status")
+	private Status retweetedStatus;
 }
