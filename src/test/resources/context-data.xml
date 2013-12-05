@@ -14,7 +14,7 @@
 	http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 
 	<util:map id="dataMap">
-		<entry key="accessToken" value="2.00RDYo1CHJdxvBf2e75d1a530MV8Vt"/>
+		<entry key="accessToken" value="2.00RDYo1CHJdxvBc5652f40c2EVPX6E"/>
 		<entry key="uid" value="2139839683"/>
 		<entry key="name" value="o风平浪静o"/>
 		<entry key="domain" value="cuizuoli"/>

@@ -40,6 +40,7 @@ public class OAuth2 {
 	private static final String OAUTH2_AUTHORIZE = "https://api.weibo.com/oauth2/authorize";
 	private static final String OAUTH2_ACCESS_TOKEN = "https://api.weibo.com/oauth2/access_token";
 	private static final String OAUTH2_GET_TOKEN_INFO = "https://api.weibo.com/oauth2/get_token_info";
+	private static final String OAUTH2_REVOKE_OAUTH2 = "https://api.weibo.com/oauth2/revokeoauth2";
 
 	@Value("#{weiboProperties['weibo.appKey']}")
 	private String appKey;
@@ -123,6 +124,17 @@ public class OAuth2 {
 			log.error(ExceptionUtils.getFullStackTrace(e));
 		}
 		return null;
+	}
+
+	/**
+	 * http://open.weibo.com/wiki/Oauth2/revokeoauth2
+	 * @param accessToken
+	 * @return
+	 */
+	public String revokeOauth2(String accessToken) {
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+		map.add("access_token", accessToken);
+		return weiboHttpClient.postForm(OAUTH2_REVOKE_OAUTH2, map, String.class);
 	}
 
 }
