@@ -7,6 +7,8 @@
 
 package com.weibo.api;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -35,13 +37,18 @@ public class StatusesTest extends AbstractTest {
 	}
 
 	@Test
+	public void destroy() {
+		statuses.destroy("3652072421540206", dataMap.get("accessToken"));
+	}
+
+	@Test
 	public void update() {
 		statuses.update("Weibo-api Update Test", dataMap.get("accessToken"));
 	}
 
 	@Test
-	public void destroy() {
-		statuses.destroy("3652072421540206", dataMap.get("accessToken"));
+	public void upload() throws FileNotFoundException, IOException {
+		statuses.upload("Weibo-api Update Test", "dhxlayout_progress.gif", dataMap.get("accessToken"));
 	}
 
 }

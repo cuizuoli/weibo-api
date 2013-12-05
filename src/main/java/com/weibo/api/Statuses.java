@@ -10,6 +10,8 @@ package com.weibo.api;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -31,6 +33,7 @@ public class Statuses {
 	private static final String STATUSES_REPORT_URL = "https://api.weibo.com/2/statuses/repost.json";
 	private static final String STATUSES_DESTROY_URL = "https://api.weibo.com/2/statuses/destroy.json";
 	private static final String STATUSES_UPDATE_URL = "https://api.weibo.com/2/statuses/update.json";
+	private static final String STATUSES_UPLOAD_URL = "https://api.weibo.com/2/statuses/upload.json";
 
 	@Resource
 	private WeiboHttpClient weiboHttpClient;
@@ -103,6 +106,40 @@ public class Statuses {
 		}
 		map.add("access_token", accessToken);
 		return weiboHttpClient.postForm(STATUSES_UPDATE_URL, map, Status.class);
+	}
+
+	/**
+	 * http://open.weibo.com/wiki/2/statuses/upload
+	 * @param status
+	 * @param pic
+	 * @param accessToken
+	 * @return
+	 */
+	public Status upload(String status, String pic, String accessToken) {
+		return upload(status, null, null, pic, accessToken);
+	}
+
+	/**
+	 * http://open.weibo.com/wiki/2/statuses/upload
+	 * @param status
+	 * @param visible
+	 * @param listId
+	 * @param pic
+	 * @param accessToken
+	 * @return
+	 */
+	public Status upload(String status, Visible visible, String listId, String pic, String accessToken) {
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		map.add("status", status);
+		if (visible != null) {
+			map.add("visible", visible.getCode());
+			if (visible == Visible.GROUP) {
+				map.add("list_id", listId);
+			}
+		}
+		map.add("pic", new ClassPathResource(pic));
+		map.add("access_token", accessToken);
+		return weiboHttpClient.post(STATUSES_UPLOAD_URL, map, Status.class, MediaType.MULTIPART_FORM_DATA);
 	}
 
 }
