@@ -90,7 +90,6 @@ public class OAuth2 {
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			AccessToken accessToken = objectMapper.readValue(result, AccessToken.class);
-			log.info(accessToken.toString());
 			return accessToken;
 		} catch (JsonParseException e) {
 			log.error(ExceptionUtils.getFullStackTrace(e));
@@ -114,7 +113,6 @@ public class OAuth2 {
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			TokenInfo tokenInfo = objectMapper.readValue(result, TokenInfo.class);
-			log.info(tokenInfo.toString());
 			return tokenInfo;
 		} catch (JsonParseException e) {
 			log.error(ExceptionUtils.getFullStackTrace(e));
