@@ -19,6 +19,7 @@ import org.springframework.util.MultiValueMap;
 import com.weibo.enums.IsComment;
 import com.weibo.enums.Visible;
 import com.weibo.http.client.WeiboHttpClient;
+import com.weibo.model.Result;
 import com.weibo.model.Status;
 
 /**
@@ -34,6 +35,9 @@ public class Statuses {
 	private static final String STATUSES_DESTROY_URL = "https://api.weibo.com/2/statuses/destroy.json";
 	private static final String STATUSES_UPDATE_URL = "https://api.weibo.com/2/statuses/update.json";
 	private static final String STATUSES_UPLOAD_URL = "https://api.weibo.com/2/statuses/upload.json";
+	private static final String STATUSES_UPLOAD_URL_TEXT_URL = "https://api.weibo.com/2/statuses/upload_url_text.json";
+	private static final String STATUSES_FILTER_CREATE_URL = "https://api.weibo.com/2/statuses/filter/create.json";
+	private static final String STATUSES_MENTIONS_SHIELD_URL = "https://api.weibo.com/2/statuses/mentions/shield.json";
 
 	@Resource
 	private WeiboHttpClient weiboHttpClient;
@@ -140,6 +144,60 @@ public class Statuses {
 		map.add("pic", new ClassPathResource(pic));
 		map.add("access_token", accessToken);
 		return weiboHttpClient.post(STATUSES_UPLOAD_URL, map, Status.class, MediaType.MULTIPART_FORM_DATA);
+	}
+
+	/**
+	 * http://open.weibo.com/wiki/2/statuses/upload_url_text
+	 * @deprecated TODO: need to added testcase.
+	 * @param status
+	 * @param visible
+	 * @param listId
+	 * @param url
+	 * @param accessToken
+	 * @return
+	 */
+	public Status uploadUrlText(String status, Visible visible, String listId, String url, String accessToken) {
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		map.add("status", status);
+		if (visible != null) {
+			map.add("visible", visible.getCode());
+			if (visible == Visible.GROUP) {
+				map.add("list_id", listId);
+			}
+		}
+		map.add("url", url);
+		map.add("access_token", accessToken);
+		return weiboHttpClient.postForm(STATUSES_UPLOAD_URL_TEXT_URL, map, Status.class);
+	}
+
+	/**
+	 * http://open.weibo.com/wiki/2/statuses/filter/create
+	 * @deprecated TODO: need to added testcase.
+	 * @param id
+	 * @param accessToken
+	 * @return
+	 */
+	public Status filterCreate(String id, String accessToken) {
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		map.add("id", id);
+		map.add("access_token", accessToken);
+		return weiboHttpClient.postForm(STATUSES_FILTER_CREATE_URL, map, Status.class);
+	}
+
+	/**
+	 * http://open.weibo.com/wiki/2/statuses/mentions/shield
+	 * @deprecated TODO: need to added testcase.
+	 * @param id
+	 * @param followUp
+	 * @param accessToken
+	 * @return
+	 */
+	public Result mentionsShield(String id, String followUp, String accessToken) {
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		map.add("id", id);
+		map.add("follow_up", followUp);
+		map.add("access_token", accessToken);
+		return weiboHttpClient.postForm(STATUSES_MENTIONS_SHIELD_URL, map, Result.class);
 	}
 
 }
