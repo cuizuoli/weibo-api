@@ -34,4 +34,9 @@ public class OAuth2Test extends AbstractTest {
 		oAuth2.getTokenInfo(dataMap.get("accessToken"));
 	}
 
+	@Test
+	public void revokeOauth2() {
+		oAuth2.revokeOauth2(dataMap.get("accessToken"));
+	}
+
 }
