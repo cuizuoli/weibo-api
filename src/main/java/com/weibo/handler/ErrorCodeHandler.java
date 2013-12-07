@@ -9,6 +9,7 @@ package com.weibo.handler;
 
 import java.io.IOException;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -31,10 +32,11 @@ import lombok.extern.slf4j.Slf4j;
 public class ErrorCodeHandler {
 
 	public ErrorCode handle(HttpStatusCodeException error) {
-		log.error("weibo-api - handle : " + "HttpStatus : [" + error.getStatusCode().toString()
-			+ "] " + error.getStatusText());
 		ObjectMapper objectMapper = new ObjectMapper();
-		ErrorCode errorCode = null;
+		ErrorCode errorCode = new ErrorCode();
+		errorCode.setRequest(StringUtils.EMPTY);
+		errorCode.setErrorCode(error.getStatusCode().toString());
+		errorCode.setError(error.getStatusText());
 		try {
 			errorCode = objectMapper.readValue(error.getResponseBodyAsByteArray(), ErrorCode.class);
 		} catch (JsonParseException e) {
