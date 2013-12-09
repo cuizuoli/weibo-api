@@ -18,6 +18,7 @@ public enum Scope {
 	EMAIL("email"),
 	DIRECT_MESSAGES_WRITE("direct_messages_write"),
 	DIRECT_MESSAGES_READ("direct_messages_read"),
+	INVITATION_WRITE("invitation_write"),
 	FRIENDSHIPS_GROUPS_READ("friendships_groups_read"),
 	FRIENDSHIPS_GROUPS_WRITE("friendships_groups_write"),
 	STATUSES_TO_ME_READ("statuses_to_me_read"),
