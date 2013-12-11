@@ -34,4 +34,19 @@ public class CommentsTest extends AbstractTest {
 		comments.show("3481474642286341", 1, 5, 0, dataMap.get("accessToken"));
 	}
 
+	@Test
+	public void byMe() {
+		comments.byMe(1, 5, 0, dataMap.get("accessToken"));
+	}
+
+	@Test
+	public void toMe() {
+		comments.toMe(1, 5, 0, 0, dataMap.get("accessToken"));
+	}
+
+	@Test
+	public void timeline() {
+		comments.timeline(1, 5, 0, dataMap.get("accessToken"));
+	}
+
 }
