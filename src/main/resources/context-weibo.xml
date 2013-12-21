@@ -17,7 +17,11 @@
 
 	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
 		<property name="requestFactory">
-			<bean class="com.weibo.http.client.TrustClientHttpRequestFactory"></bean>
+			<bean class="com.weibo.http.client.TrustClientHttpRequestFactory">
+				<property name="sslSocketFactory">
+					<bean class="com.weibo.http.client.TrustSSLSocketFactoryFactoryBean"></bean>
+				</property>
+			</bean>
 		</property>
 		<property name="messageConverters">
 			<array>

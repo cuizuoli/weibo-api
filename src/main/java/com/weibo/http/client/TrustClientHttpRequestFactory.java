@@ -11,15 +11,11 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.Proxy;
 import java.net.URL;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
+import javax.net.ssl.SSLSocketFactory;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
@@ -32,10 +28,19 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
  */
 public class TrustClientHttpRequestFactory extends SimpleClientHttpRequestFactory {
 
+	private SSLSocketFactory sslSocketFactory;
+
+	private final static HostnameVerifier DO_NOT_VERIFY = new HostnameVerifier() {
+		@Override
+		public boolean verify(String hostname, SSLSession session) {
+			return true;
+		}
+	};
+
 	@Override
 	protected HttpURLConnection openConnection(URL url, Proxy proxy) throws IOException {
 		if (StringUtils.equals(url.getProtocol(), "https")) {
-			trustAllHosts();
+			HttpsURLConnection.setDefaultSSLSocketFactory(sslSocketFactory);
 			HttpsURLConnection urlConnection = (HttpsURLConnection)(proxy != null ? url.openConnection(proxy)
 				: url.openConnection());
 			urlConnection.setHostnameVerifier(DO_NOT_VERIFY);
@@ -45,44 +50,10 @@ public class TrustClientHttpRequestFactory extends SimpleClientHttpRequestFactor
 				: url.openConnection());
 			return urlConnection;
 		}
-		//URLConnection urlConnection = (proxy != null ? url.openConnection(proxy) : url.openConnection());
-		//Assert.isInstanceOf(HttpURLConnection.class, urlConnection);
-		//return (HttpURLConnection)urlConnection;
 	}
 
-	private HostnameVerifier DO_NOT_VERIFY = new HostnameVerifier() {
-		@Override
-		public boolean verify(String hostname, SSLSession session) {
-			return true;
-		}
-	};
-
-	/**
-	 * trustAllHosts
-	 */
-	private void trustAllHosts() {
-		// Create a trust manager that does not validate certificate chains
-		TrustManager[] trustAllCerts = new TrustManager[]{
-			new X509TrustManager() {
-				public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-					return new java.security.cert.X509Certificate[]{};
-				}
-
-				public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-				}
-
-				public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-				}
-			}
-		};
-		// Install the all-trusting trust manager
-		try {
-			SSLContext sc = SSLContext.getInstance("TLS");
-			sc.init(null, trustAllCerts, new java.security.SecureRandom());
-			HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void setSslSocketFactory(SSLSocketFactory sslSocketFactory) {
+		this.sslSocketFactory = sslSocketFactory;
 	}
 
 }
