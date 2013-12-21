@@ -93,7 +93,7 @@
 	</appender>
 
 	<logger name="org.springframework" level="DEBUG"/>
-	<logger name="com.sinaapp.outdoor" level="DEBUG"/>
+	<logger name="com.weibo" level="DEBUG"/>
 
 	<root level="DEBUG">
 		<appender-ref ref="CONSOLE"/>
