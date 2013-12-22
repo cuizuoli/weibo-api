@@ -38,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 public class WeiboHttpClient {
 
 	@Resource
-	private RestTemplate restTemplate;
+	private RestTemplate weiboRestTemplate;
 
 	@Resource
 	private ErrorCodeHandler errorCodeHandler;
@@ -89,7 +89,7 @@ public class WeiboHttpClient {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(mediaType);
 			HttpEntity<? extends Object> httpEntity = new HttpEntity<Object>(request, headers);
-			result = restTemplate.postForObject(url, httpEntity, responseType);
+			result = weiboRestTemplate.postForObject(url, httpEntity, responseType);
 			log.info("result : " + result.toString());
 		} catch (HttpStatusCodeException e) {
 			ErrorCode errorCode = errorCodeHandler.handle(e);
@@ -123,7 +123,7 @@ public class WeiboHttpClient {
 				url += getBody(request);
 			}
 			log.info("api - get: " + url);
-			result = restTemplate.getForObject(url, responseType);
+			result = weiboRestTemplate.getForObject(url, responseType);
 			log.info("result : " + result.toString());
 		} catch (HttpStatusCodeException e) {
 			ErrorCode errorCode = errorCodeHandler.handle(e);

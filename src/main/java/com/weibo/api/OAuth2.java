@@ -54,6 +54,9 @@ public class OAuth2 {
 	@Resource
 	private WeiboHttpClient weiboHttpClient;
 
+	@Resource
+	private ObjectMapper weiboObjectMapper;
+
 	/**
 	 * http://open.weibo.com/wiki/Oauth2/authorize
 	 * @param scope
@@ -87,9 +90,8 @@ public class OAuth2 {
 		map.add("code", code);
 		map.add("redirect_uri", redirectUri);
 		String result = weiboHttpClient.postForm(OAUTH2_ACCESS_TOKEN, map, String.class);
-		ObjectMapper objectMapper = new ObjectMapper();
 		try {
-			AccessToken accessToken = objectMapper.readValue(result, AccessToken.class);
+			AccessToken accessToken = weiboObjectMapper.readValue(result, AccessToken.class);
 			return accessToken;
 		} catch (JsonParseException e) {
 			log.error(ExceptionUtils.getFullStackTrace(e));
@@ -110,9 +112,8 @@ public class OAuth2 {
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
 		map.add("access_token", accessToken);
 		String result = weiboHttpClient.postForm(OAUTH2_GET_TOKEN_INFO, map, String.class);
-		ObjectMapper objectMapper = new ObjectMapper();
 		try {
-			TokenInfo tokenInfo = objectMapper.readValue(result, TokenInfo.class);
+			TokenInfo tokenInfo = weiboObjectMapper.readValue(result, TokenInfo.class);
 			return tokenInfo;
 		} catch (JsonParseException e) {
 			log.error(ExceptionUtils.getFullStackTrace(e));

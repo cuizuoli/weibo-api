@@ -13,27 +13,27 @@
 	http://www.springframework.org/schema/util
 	http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 
-	<util:properties id="weiboProperties" location="classpath:weibo.properties"></util:properties>
+	<util:properties id="weiboProperties" location="classpath:weibo.properties"/>
 
-	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+	<bean id="weiboObjectMapper" class="com.weibo.http.client.ObjectMapperFactoryBean"/>
+
+	<bean id="weiboRestTemplate" class="org.springframework.web.client.RestTemplate">
 		<property name="requestFactory">
 			<bean class="com.weibo.http.client.TrustClientHttpRequestFactory">
 				<property name="sslSocketFactory">
-					<bean class="com.weibo.http.client.TrustSSLSocketFactoryFactoryBean"></bean>
+					<bean class="com.weibo.http.client.TrustSSLSocketFactoryFactoryBean"/>
 				</property>
 			</bean>
 		</property>
 		<property name="messageConverters">
 			<array>
 				<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
-					<property name="objectMapper">
-						<bean class="com.weibo.http.client.ObjectMapperFactoryBean"/>
-					</property>
+					<property name="objectMapper" ref="weiboObjectMapper"/>
 				</bean>
 				<bean class="org.springframework.http.converter.FormHttpMessageConverter">
-					<property name="charset" value="UTF-8"></property>
+					<property name="charset" value="UTF-8"/>
 				</bean>
-				<bean class="org.springframework.http.converter.StringHttpMessageConverter"></bean>
+				<bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
 			</array>
 		</property>
 	</bean>
