@@ -21,6 +21,7 @@ import com.weibo.enums.Visible;
 import com.weibo.http.client.WeiboHttpClient;
 import com.weibo.model.Result;
 import com.weibo.model.Status;
+import com.weibo.model.StatusCount;
 
 /**
  * DaLian Software weibo-api
@@ -38,6 +39,7 @@ public class Statuses {
 	private static final String STATUSES_UPLOAD_URL_TEXT_URL = "https://api.weibo.com/2/statuses/upload_url_text.json";
 	private static final String STATUSES_FILTER_CREATE_URL = "https://api.weibo.com/2/statuses/filter/create.json";
 	private static final String STATUSES_MENTIONS_SHIELD_URL = "https://api.weibo.com/2/statuses/mentions/shield.json";
+	private static final String STATUSES_COUNT_URL = "https://api.weibo.com/2/statuses/count.json";
 
 	@Resource
 	private WeiboHttpClient weiboHttpClient;
@@ -198,6 +200,21 @@ public class Statuses {
 		map.add("follow_up", followUp);
 		map.add("access_token", accessToken);
 		return weiboHttpClient.postForm(STATUSES_MENTIONS_SHIELD_URL, map, Result.class);
+	}
+
+	/**
+	 * http://open.weibo.com/wiki/2/statuses/count
+	 * @param ids
+	 * @param accessToken
+	 * @return
+	 */
+	public StatusCount[] count(String ids, String accessToken) {
+		String url = new StringBuffer()
+			.append(STATUSES_COUNT_URL)
+			.append("?ids=").append(ids)
+			.append("&access_token=").append(accessToken)
+			.toString();
+		return weiboHttpClient.get(url, StatusCount[].class);
 	}
 
 }

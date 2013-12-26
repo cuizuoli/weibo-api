@@ -16,6 +16,9 @@ import javax.annotation.Resource;
 import org.junit.Test;
 
 import com.weibo.api.test.AbstractTest;
+import com.weibo.model.StatusCount;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * DaLian Software weibo-api
@@ -23,6 +26,7 @@ import com.weibo.api.test.AbstractTest;
  * @author st13902
  * @date 2013年12月2日
  */
+@Slf4j
 public class StatusesTest extends AbstractTest {
 
 	@Resource
@@ -49,6 +53,12 @@ public class StatusesTest extends AbstractTest {
 	@Test
 	public void upload() throws FileNotFoundException, IOException {
 		statuses.upload("Weibo-api Update Test", "dhxlayout_progress.gif", dataMap.get("accessToken"));
+	}
+
+	@Test
+	public void count() {
+		StatusCount[] statusCounts = statuses.count("3481474642286341,3478931308682632,3479600589793135", "2.00RDYo1CY_6O6B80e36ffe28a7QynC");
+		log.info(statusCounts[0].toString());
 	}
 
 }
