@@ -19,6 +19,6 @@ import lombok.Data;
 public class StatusCount {
 	private long id;
 	private int comments;
-	private int reports;
+	private int reposts;
 	private int attitudes;
 }
