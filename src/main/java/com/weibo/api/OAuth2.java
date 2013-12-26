@@ -8,9 +8,16 @@
 package com.weibo.api;
 
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 import javax.annotation.Resource;
+import javax.crypto.Mac;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -23,6 +30,7 @@ import org.springframework.util.MultiValueMap;
 import com.weibo.enums.Display;
 import com.weibo.http.client.WeiboHttpClient;
 import com.weibo.model.AccessToken;
+import com.weibo.model.ProfessionalTokenInfo;
 import com.weibo.model.TokenInfo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +44,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class OAuth2 {
+
+	private static final String ALGORITHM_HMACSHA256 = "hmacSHA256";
 
 	private static final String OAUTH2_AUTHORIZE = "https://api.weibo.com/oauth2/authorize";
 	private static final String OAUTH2_ACCESS_TOKEN = "https://api.weibo.com/oauth2/access_token";
@@ -134,6 +144,53 @@ public class OAuth2 {
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
 		map.add("access_token", accessToken);
 		return weiboHttpClient.postForm(OAUTH2_REVOKE_OAUTH2, map, String.class);
+	}
+
+	/**
+	 * 解析站内应用post的signed_request split为part1和part2两部分
+	 * @param signedRequest
+	 * @param appSecret
+	 * @return
+	 */
+	public ProfessionalTokenInfo parseSignedRequest(String signedRequest, String appSecret) {
+		ProfessionalTokenInfo tokenInfo = null;
+		String[] tokens = StringUtils.split(signedRequest, "\\.", 2);
+		// base64Token
+		String base64Token = tokens[0];
+		// 为了和 url encode/decode 不冲突，base64url 编码方式会将
+		// '+'，'/'转换成'-'，'_'，并且去掉结尾的'='。 因此解码之前需要还原到默认的base64编码，结尾的'='可以用以下算法还原
+		int padding = (4 - base64Token.length() % 4);
+		for (int i = 0; i < padding; i++) {
+			base64Token += "=";
+		}
+		base64Token = StringUtils.replace(base64Token, "-", "+");
+		base64Token = StringUtils.replace(base64Token, "_", "/");
+		// base64Token1
+		String token1 = tokens[1];
+		SecretKey key = new SecretKeySpec(appSecret.getBytes(), ALGORITHM_HMACSHA256);
+		try {
+			Mac mac = Mac.getInstance(ALGORITHM_HMACSHA256);
+			mac.init(key);
+			mac.update(token1.getBytes());
+			byte[] macResult = mac.doFinal();
+			String base64Token1 = Base64.encodeBase64String(macResult);
+			// access token
+			if (StringUtils.equals(base64Token, base64Token1)) {
+				tokenInfo = weiboObjectMapper.readValue(new String(Base64.decodeBase64(token1)), ProfessionalTokenInfo.class);
+				log.info(tokenInfo.toString());
+			}
+		} catch (NoSuchAlgorithmException e) {
+			log.error(ExceptionUtils.getFullStackTrace(e));
+		} catch (InvalidKeyException e) {
+			log.error(ExceptionUtils.getFullStackTrace(e));
+		} catch (JsonParseException e) {
+			log.error(ExceptionUtils.getFullStackTrace(e));
+		} catch (JsonMappingException e) {
+			log.error(ExceptionUtils.getFullStackTrace(e));
+		} catch (IOException e) {
+			log.error(ExceptionUtils.getFullStackTrace(e));
+		}
+		return tokenInfo;
 	}
 
 }
