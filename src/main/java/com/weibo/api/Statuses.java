@@ -45,7 +45,7 @@ public class Statuses {
 	private WeiboHttpClient weiboHttpClient;
 
 	/**
-	 * repost
+	 * http://open.weibo.com/wiki/2/statuses/repost
 	 * @param id
 	 * @param status
 	 * @param isComment
