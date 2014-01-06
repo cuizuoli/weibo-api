@@ -7,6 +7,8 @@
 
 package com.weibo.api;
 
+import java.net.URLEncoder;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
@@ -121,8 +123,9 @@ public class Statuses {
 	 * @param accessToken
 	 * @return
 	 */
+	@SuppressWarnings("deprecation")
 	public Status upload(String status, String pic, String accessToken) {
-		return upload(status, null, null, pic, accessToken);
+		return upload(URLEncoder.encode(status), null, null, pic, accessToken);
 	}
 
 	/**

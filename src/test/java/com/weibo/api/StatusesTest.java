@@ -52,7 +52,7 @@ public class StatusesTest extends AbstractTest {
 
 	@Test
 	public void upload() throws FileNotFoundException, IOException {
-		statuses.upload("Weibo-api Update Test", "dhxlayout_progress.gif", dataMap.get("accessToken"));
+		statuses.upload("微博测试1111验33333", "dhxlayout_progress.gif", dataMap.get("accessToken"));
 	}
 
 	@Test
