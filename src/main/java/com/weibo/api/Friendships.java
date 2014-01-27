@@ -40,6 +40,8 @@ public class Friendships {
 		String url = new StringBuffer()
 			.append(FRIENDSHIPS_FOLLOWERS_URL)
 			.append("?uid=").append(uid)
+			.append("&count=").append(count)
+			.append("&cursor=").append(cursor)
 			.append("&access_token=").append(accessToken)
 			.toString();
 		return weiboHttpClient.get(url, UserResult.class);
@@ -57,6 +59,8 @@ public class Friendships {
 		String url = new StringBuffer()
 			.append(FRIENDSHIPS_FOLLOWERS_URL)
 			.append("?screen_name=").append(screenName)
+			.append("&count=").append(count)
+			.append("&cursor=").append(cursor)
 			.append("&access_token=").append(accessToken)
 			.toString();
 		return weiboHttpClient.get(url, UserResult.class);
