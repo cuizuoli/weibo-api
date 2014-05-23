@@ -24,7 +24,6 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -51,15 +50,6 @@ public class OAuth2 {
 	private static final String OAUTH2_ACCESS_TOKEN = "https://api.weibo.com/oauth2/access_token";
 	private static final String OAUTH2_GET_TOKEN_INFO = "https://api.weibo.com/oauth2/get_token_info";
 	private static final String OAUTH2_REVOKE_OAUTH2 = "https://api.weibo.com/oauth2/revokeoauth2";
-
-	@Value("#{weiboProperties['weibo.appKey']}")
-	private String appKey;
-
-	@Value("#{weiboProperties['weibo.appSecret']}")
-	private String appSecret;
-
-	@Value("#{weiboProperties['weibo.redirectUri']}")
-	private String redirectUri;
 
 	@Resource
 	private WeiboHttpClient weiboHttpClient;
@@ -90,17 +80,6 @@ public class OAuth2 {
 	}
 
 	/**
-	 * http://open.weibo.com/wiki/Oauth2/authorize
-	 * @param scope
-	 * @param state
-	 * @param display
-	 * @return
-	 */
-	public String authorize(String scope, String state, Display display) {
-		return authorize(appKey, redirectUri, scope, state, display);
-	}
-
-	/**
 	 * http://open.weibo.com/wiki/OAuth2/access_token
 	 * @param appKey
 	 * @param appSecret
@@ -127,15 +106,6 @@ public class OAuth2 {
 			log.error(ExceptionUtils.getFullStackTrace(e));
 		}
 		return null;
-	}
-
-	/**
-	 * http://open.weibo.com/wiki/OAuth2/access_token
-	 * @param code
-	 * @return
-	 */
-	public AccessToken accessToken(String code) {
-		return accessToken(appKey, appSecret, redirectUri, code);
 	}
 
 	/**

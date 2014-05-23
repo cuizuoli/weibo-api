@@ -13,8 +13,6 @@
 	http://www.springframework.org/schema/util
 	http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 
-	<util:properties id="weiboProperties" location="classpath:weibo.properties"/>
-
 	<bean id="weiboObjectMapper" class="com.weibo.http.client.ObjectMapperFactoryBean"/>
 
 	<bean id="weiboRestTemplate" class="org.springframework.web.client.RestTemplate">
