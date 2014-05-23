@@ -16,6 +16,8 @@ import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
@@ -32,8 +34,6 @@ import com.weibo.http.client.WeiboHttpClient;
 import com.weibo.model.AccessToken;
 import com.weibo.model.ProfessionalTokenInfo;
 import com.weibo.model.TokenInfo;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * DaLian Software weibo-api
@@ -69,12 +69,14 @@ public class OAuth2 {
 
 	/**
 	 * http://open.weibo.com/wiki/Oauth2/authorize
+	 * @param appKey
+	 * @param redirectUri
 	 * @param scope
 	 * @param state
 	 * @param display
 	 * @return
 	 */
-	public String authorize(String scope, String state, Display display) {
+	public String authorize(String appKey, String redirectUri, String scope, String state, Display display) {
 		String authorizeUrl = new StringBuffer()
 			.append(OAUTH2_AUTHORIZE)
 			.append("?client_id=").append(appKey)
@@ -88,11 +90,25 @@ public class OAuth2 {
 	}
 
 	/**
+	 * http://open.weibo.com/wiki/Oauth2/authorize
+	 * @param scope
+	 * @param state
+	 * @param display
+	 * @return
+	 */
+	public String authorize(String scope, String state, Display display) {
+		return authorize(appKey, redirectUri, scope, state, display);
+	}
+
+	/**
 	 * http://open.weibo.com/wiki/OAuth2/access_token
+	 * @param appKey
+	 * @param appSecret
+	 * @param redirectUri
 	 * @param code
 	 * @return
 	 */
-	public AccessToken accessToken(String code) {
+	public AccessToken accessToken(String appKey, String appSecret, String redirectUri, String code) {
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
 		map.add("client_id", appKey);
 		map.add("client_secret", appSecret);
@@ -111,6 +127,15 @@ public class OAuth2 {
 			log.error(ExceptionUtils.getFullStackTrace(e));
 		}
 		return null;
+	}
+
+	/**
+	 * http://open.weibo.com/wiki/OAuth2/access_token
+	 * @param code
+	 * @return
+	 */
+	public AccessToken accessToken(String code) {
+		return accessToken(appKey, appSecret, redirectUri, code);
 	}
 
 	/**
