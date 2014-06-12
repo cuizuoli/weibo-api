@@ -1,8 +1,8 @@
 /*
  * @(#)Common.java $version 2014年1月23日
  *
- * Copyright 2014 NHN China. All rights Reserved.
- * NHN China PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ * Copyright 2014 cuizuoli.cn. All rights Reserved.
+ * cuizuoli.cn PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
 
 package com.weibo.api;
@@ -18,7 +18,7 @@ import com.weibo.http.client.WeiboHttpClient;
 /**
  * nhn weibo-api
  * com.weibo.api.Common.java
- * @author CN40101
+ * @author cuizuoli
  * @date 2014年1月23日
  */
 @Component
