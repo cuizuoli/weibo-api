@@ -1,8 +1,8 @@
 /*
  * @(#)TrustSSLSocketFactoryFactoryBean.java $version 2013年12月21日
  *
- * Copyright 2013 DaLian Software. All rights Reserved.
- * DaLian Software PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ * Copyright 2013 cuizuoli.cn. All rights Reserved.
+ * cuizuoli.cn PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
 
 package com.weibo.http.client;
@@ -19,7 +19,7 @@ import javax.net.ssl.X509TrustManager;
 import org.springframework.beans.factory.FactoryBean;
 
 /**
- * DaLian Software weibo-api
+ * weibo-api
  * com.weibo.http.client.TrustSSLSocketFactoryFactoryBean.java
  * @author cuizuoli
  * @date 2013年12月21日
@@ -50,7 +50,7 @@ public class TrustSSLSocketFactoryFactoryBean implements FactoryBean<SSLSocketFa
 
 	/**
 	 * TrustAnyTrustManager
-	 * DaLian Software weibo-api
+	 * weibo-api
 	 * com.weibo.http.client.TrustSSLSocketFactoryFactoryBean.java
 	 * @author cuizuoli
 	 * @date 2013年12月21日

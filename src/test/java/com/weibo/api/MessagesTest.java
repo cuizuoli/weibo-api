@@ -1,8 +1,8 @@
 /*
  * @(#)MessagesTest.java $version 2013年12月9日
  *
- * Copyright 2013 DaLian Software. All rights Reserved.
- * DaLian Software PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ * Copyright 2013 cuizuoli.cn. All rights Reserved.
+ * cuizuoli.cn PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
 
 package com.weibo.api;
@@ -17,7 +17,7 @@ import com.weibo.api.test.AbstractTest;
 import com.weibo.model.InviteData;
 
 /**
- * DaLian Software weibo-api
+ * weibo-api
  * com.weibo.api.MessagesTest.java
  * @author cuizuoli
  * @date 2013年12月9日

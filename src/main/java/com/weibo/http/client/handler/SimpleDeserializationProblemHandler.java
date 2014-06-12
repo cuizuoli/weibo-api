@@ -1,8 +1,8 @@
 /*
  * @(#)SimpleDeserializationProblemHandler.java $version 2013年11月23日
  *
- * Copyright 2013 DaLian Software. All rights Reserved.
- * DaLian Software PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ * Copyright 2013 cuizuoli.cn. All rights Reserved.
+ * cuizuoli.cn PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
 
 package com.weibo.http.client.handler;
@@ -17,7 +17,7 @@ import org.codehaus.jackson.map.JsonDeserializer;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * DaLian Software weibo-api
+ * weibo-api
  * com.weibo.http.client.handler.SimpleDeserializationProblemHandler.java
  * @author cuizuoli
  * @date 2013年11月23日

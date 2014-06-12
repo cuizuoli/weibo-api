@@ -1,8 +1,8 @@
 /*
  * @(#)Users.java $version 2013年11月23日
  *
- * Copyright 2013 DaLian Software. All rights Reserved.
- * DaLian Software PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ * Copyright 2013 cuizuoli.cn. All rights Reserved.
+ * cuizuoli.cn PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
 
 package com.weibo.api;
@@ -16,7 +16,7 @@ import com.weibo.model.User;
 import com.weibo.model.UserCount;
 
 /**
- * DaLian Software weibo-api
+ * weibo-api
  * com.weibo.api.Users.java
  * @author cuizuoli
  * @date 2013年11月23日

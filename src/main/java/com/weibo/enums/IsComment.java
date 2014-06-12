@@ -2,13 +2,13 @@
  * @(#)IsComment.java $version 2013年12月5日
  *
  * Copyright 2013 NHN ST. All rights Reserved.
- * DaLian Software PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ * cuizuoli.cn PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
 
 package com.weibo.enums;
 
 /**
- * DaLian Software weibo-api
+ * weibo-api
  * 是否在转发的同时发表评论，
  * 0：否
  * 1：评论给当前微博

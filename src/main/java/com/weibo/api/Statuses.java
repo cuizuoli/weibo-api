@@ -26,7 +26,7 @@ import com.weibo.model.Status;
 import com.weibo.model.StatusCount;
 
 /**
- * DaLian Software weibo-api
+ * weibo-api
  * com.weibo.api.Statuses.java
  * @author st13902
  * @date 2013年12月2日
