@@ -12,7 +12,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import lombok.Data;
 
 /**
- * nhn weibo-api
+ * weibo-api
  * com.weibo.model.CommentsResult.java
  * @author st13902
  * @date 2013年12月10日

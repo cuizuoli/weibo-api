@@ -18,7 +18,7 @@ import org.junit.Test;
 import com.weibo.api.test.AbstractTest;
 
 /**
- * nhn weibo-api
+ * weibo-api
  * com.weibo.api.CommonTest.java
  * @author cuizuoli
  * @date 2014年1月23日

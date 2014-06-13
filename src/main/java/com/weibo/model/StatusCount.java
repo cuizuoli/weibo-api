@@ -10,7 +10,7 @@ package com.weibo.model;
 import lombok.Data;
 
 /**
- * nhn weibo-api
+ * weibo-api
  * com.weibo.model.StatusCount.java
  * @author st13902
  * @date 2013年12月26日

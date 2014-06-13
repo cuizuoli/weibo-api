@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import com.weibo.http.client.WeiboHttpClient;
 
 /**
- * nhn weibo-api
+ * weibo-api
  * com.weibo.api.Common.java
  * @author cuizuoli
  * @date 2014年1月23日

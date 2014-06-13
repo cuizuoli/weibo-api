@@ -31,7 +31,8 @@ import org.springframework.util.MultiValueMap;
 import com.weibo.enums.Display;
 import com.weibo.http.client.WeiboHttpClient;
 import com.weibo.model.AccessToken;
-import com.weibo.model.ProfessionalTokenInfo;
+import com.weibo.model.PageTokenInfo;
+import com.weibo.model.AppTokenInfo;
 import com.weibo.model.TokenInfo;
 
 /**
@@ -141,14 +142,8 @@ public class OAuth2 {
 		return weiboHttpClient.postForm(OAUTH2_REVOKE_OAUTH2, map, String.class);
 	}
 
-	/**
-	 * 解析站内应用post的signed_request split为part1和part2两部分
-	 * @param signedRequest
-	 * @param appSecret
-	 * @return
-	 */
-	public ProfessionalTokenInfo parseSignedRequest(String signedRequest, String appSecret) {
-		ProfessionalTokenInfo tokenInfo = null;
+	private String parseSignedRequest(String signedRequest, String appSecret) {
+		String tokenInfoValue = null;
 		String[] tokens = StringUtils.split(signedRequest, "\\.", 2);
 		// base64Token
 		String base64Token = tokens[0];
@@ -171,13 +166,56 @@ public class OAuth2 {
 			String base64Token1 = Base64.encodeBase64String(macResult);
 			// access token
 			if (StringUtils.equals(base64Token, base64Token1)) {
-				tokenInfo = weiboObjectMapper.readValue(new String(Base64.decodeBase64(token1)), ProfessionalTokenInfo.class);
-				log.info(tokenInfo.toString());
+				tokenInfoValue = new String(Base64.decodeBase64(token1));
+				log.info(tokenInfoValue);
 			}
 		} catch (NoSuchAlgorithmException e) {
 			log.error(ExceptionUtils.getFullStackTrace(e));
 		} catch (InvalidKeyException e) {
 			log.error(ExceptionUtils.getFullStackTrace(e));
+		}
+		return tokenInfoValue;
+	}
+
+	/**
+	 * 解析站内应用post的signed_request split为part1和part2两部分
+	 * @param signedRequest
+	 * @param appSecret
+	 * @return
+	 */
+	@Deprecated
+	public AppTokenInfo parseAppSignedRequest(String signedRequest, String appSecret) {
+		AppTokenInfo tokenInfo = null;
+		try {
+			String tokenInfoValue = parseSignedRequest(signedRequest, appSecret);
+			if (StringUtils.isNotEmpty(tokenInfoValue)) {
+				tokenInfo = weiboObjectMapper.readValue(tokenInfoValue, AppTokenInfo.class);
+			}
+			log.info(tokenInfo.toString());
+		} catch (JsonParseException e) {
+			log.error(ExceptionUtils.getFullStackTrace(e));
+		} catch (JsonMappingException e) {
+			log.error(ExceptionUtils.getFullStackTrace(e));
+		} catch (IOException e) {
+			log.error(ExceptionUtils.getFullStackTrace(e));
+		}
+		return tokenInfo;
+	}
+
+	/**
+	 * 解析Page轻应用post的signed_request split为part1和part2两部分
+	 * @param signedRequest
+	 * @param appSecret
+	 * @return
+	 */
+	public PageTokenInfo parsePageSignedRequest(String signedRequest, String appSecret) {
+		PageTokenInfo tokenInfo = null;
+		try {
+			String tokenInfoValue = parseSignedRequest(signedRequest, appSecret);
+			if (StringUtils.isNotEmpty(tokenInfoValue)) {
+				tokenInfo = weiboObjectMapper.readValue(tokenInfoValue, PageTokenInfo.class);
+			}
+			log.info(tokenInfo.toString());
 		} catch (JsonParseException e) {
 			log.error(ExceptionUtils.getFullStackTrace(e));
 		} catch (JsonMappingException e) {
